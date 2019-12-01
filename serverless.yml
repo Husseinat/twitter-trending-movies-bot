@@ -8,12 +8,11 @@ provider:
     runtime: nodejs10.x
     region: us-east-1
 
-    environment:
-        EXAMPLE_ENV: "TEST"
+    environment: ${file(./.env/dev.yml)}
 
     tracing: true
     iamRoleStatements:
-        - Effect: "Allow" # xray permissions (required)
+        - Effect: "Allow"
           Action:
               - "xray:PutTraceSegments"
               - "xray:PutTelemetryRecords"
@@ -23,8 +22,14 @@ plugins:
     - serverless-plugin-tracing
 
 functions:
-    currentTime:
-        handler: handler.endpoint
+    tweetBestMoviesJob:
+        handler: functions/bestMovies.job
+        events:
+            - schedule:
+              rate: cron(0 18 * * *)
+
+    tweetBestMoviesEndpoint:
+        handler: functions/bestMovies.endpoint
         events:
             - http:
                   path: ping
