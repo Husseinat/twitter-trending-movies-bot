@@ -1,0 +1,31 @@
+service: twitter-trending-movies-bot
+
+frameworkVersion: ">=1.1.0 <2.0.0"
+
+provider:
+    name: aws
+    stage: ${opt:stage, 'dev'}
+    runtime: nodejs10.x
+    region: us-east-1
+
+    environment:
+        EXAMPLE_ENV: "TEST"
+
+    tracing: true
+    iamRoleStatements:
+        - Effect: "Allow" # xray permissions (required)
+          Action:
+              - "xray:PutTraceSegments"
+              - "xray:PutTelemetryRecords"
+          Resource:
+              - "*"
+plugins:
+    - serverless-plugin-tracing
+
+functions:
+    currentTime:
+        handler: handler.endpoint
+        events:
+            - http:
+                  path: ping
+                  method: get
