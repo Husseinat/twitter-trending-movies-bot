@@ -35,8 +35,7 @@ const tweetBestMovies = async () => {
 
 module.exports = {
     endpoint: async event => {
-        console.log(event);
-        if (event.queryStringParameters && event.queryStringParameters.key === "chavebloqueante")
+        if (event.queryStringParameters && event.queryStringParameters.key === process.env.API_CALL_KEY)
             return {
                 statusCode: 200,
                 body: await tweetBestMovies()
