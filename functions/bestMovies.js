@@ -9,7 +9,7 @@ const twitterApi = require("../api/twitter");
 const theMovieDbApi = require("../api/theMovieDb");
 
 const getTweetMessage = movies =>
-    ` 🔝🎥 ${moment().format("MM/DD/YYYY")} BEST MOVIES 🎞🎬\n\n${movies
+    ` 🔝🎥 ${moment().format("MM/DD/YYYY")} TRENDING MOVIES 🎞🎬\n\n${movies
         .slice(0, 5)
         .map((m, i) => `${i + 1}🏅   ${m.vote_average}⭐ ${m.title}`)
         .join("\n")}\n\n\nsource: themoviedb.org`;
